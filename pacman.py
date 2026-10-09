@@ -3,7 +3,7 @@ import curses
 import random
 import time 
 H,W = 15,21
-tick = 0.10
+tick = 0.12
 dirs = {"U":(-1,0),"D":(1,0),"L":(0,-1),"R":(0,1)}
 OPP = {"U":"D","D":"U","L":"R","R":"L"}
 
@@ -69,7 +69,7 @@ class Game:
         self.hi = 0
         self.new_game()
     def new_game(self):
-        self.score, self.lives, self.level = 0, 3, 1
+        self.score, self.lives, self.level = 0, 5, 1
         self.state = "play"
         self.load_level()
 
@@ -195,7 +195,7 @@ def put(scr, y, x, s, attr):
         scr.addstr(y, x, s, attr)
     except curses.error:
         pass
-def main(scr):
+def run(scr):
     curses.curs_set(0)
     scr.keypad(True)
     scr.timeout(10)
@@ -227,4 +227,4 @@ def main(scr):
                 curses.flushinp()
                 game.state = "play"
 if __name__ == "__main__":
-    curses.wrapper(main)
+    curses.wrapper(run)
