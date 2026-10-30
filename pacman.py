@@ -151,7 +151,10 @@ class Game:
                     self.score += 200
                     self.charges -= 1
                     g.update(r=self.spawn[0], c=self.spawn[1], pr=self.spawn[0], pc=self.spawn[1],
-                             afraid=False, delay=30)
+                             afraid=self.charges>0, delay=30)
+                    if self.charges == 0:
+                        for o in self.ghosts:
+                            o["afraid"] = False
                     for o in self.ghosts:
                         o["afraid"] = False
                 else:
