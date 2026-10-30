@@ -84,7 +84,8 @@ class SnakeGame:
         if hh < H + 3 or ww < W * 2 + 2:
             put(scr, 0, 0, "Window too small", 0)
             return scr.refresh()
-        put(scr, 0, 0, f"SCORE {self.score}  HI {self.hi}  LEN {len(self.body)}", curses.A_BOLD)
+        ox, oy = (ww - (W * 2 + 2)) // 2, (hh - (H + 3)) // 2
+        put(scr, oy, ox, f"SCORE {self.score}  HI {self.hi}  LEN {len(self.body)}", curses.A_BOLD)
 
         body_set = set(self.body)
         head = self.body[0]

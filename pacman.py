@@ -165,7 +165,8 @@ class Game:
         if hh < H + 3 or ww < W*2 +2 :
             put(scr, 0, 0, "Window too small",0)
             return scr.refresh()
-        put(scr, 0, 0, f"SCORE {self.score}  HI {self.hi}  LIVES {self.lives}  LEVEL {self.level}", curses.A_BOLD)
+        oy, ox = (hh - (H+3))//2, (ww - (W*2+2))//2
+        put(scr, oy, ox, f"SCORE {self.score}  HI {self.hi}  LIVES {self.lives}  LEVEL {self.level}", curses.A_BOLD)
         ghosts = {(g["r"], g["c"]): g for g in self.ghosts}
         for r in range(H):
             for c in range(W):
