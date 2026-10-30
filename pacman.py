@@ -84,6 +84,7 @@ class Game:
         self.ppr, self.ppc = self.pr, self.pc
         self.pd = self.nd = "L"
         self.fright = 0
+        self.charges = 0
         self.ghosts = [dict(r=self.spawn[0], c=self.spawn[1], pr=self.spawn[0], pc=self.spawn[1],
                             d="U", delay=i * 20, afraid=False) for i in range(3)]
     def walk(self, r, c):
@@ -130,6 +131,7 @@ class Game:
             self.grid[self.pr][self.pc] = " "
             if cell == "o":
                 self.fright = 60
+                self.charges += 1
                 for g in self.ghosts:
                     g["afraid"] = True
                     g["d"] = OPP[g["d"]]
@@ -147,11 +149,11 @@ class Game:
             if same or swap:
                 if g["afraid"]:
                     self.score += 200
+                    self.charges -= 1
                     g.update(r=self.spawn[0], c=self.spawn[1], pr=self.spawn[0], pc=self.spawn[1],
-                             afraid=False, delay=25)
+                             afraid=False, delay=30)
                     for o in self.ghosts:
                         o["afraid"] = False
-                    self.fright = 0
                 else:
                     self.lives -= 1
                     self.state = "dead" if self.lives > 0 else "over"
@@ -166,7 +168,7 @@ class Game:
             put(scr, 0, 0, "Window too small",0)
             return scr.refresh()
         oy, ox = (hh - (H+3))//2, (ww - (W*2+2))//2
-        put(scr, oy, ox, f"SCORE {self.score}  HI {self.hi}  LIVES {self.lives}  LEVEL {self.level}", curses.A_BOLD)
+        put(scr, oy, ox, f"SCORE {self.score}  HI {self.hi}  LIVES {self.lives}  LEVEL {self.level}  CHARGES {self.charges}", curses.A_BOLD)
         ghosts = {(g["r"], g["c"]): g for g in self.ghosts}
         for r in range(H):
             for c in range(W):
