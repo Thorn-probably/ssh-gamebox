@@ -170,7 +170,7 @@ class Game:
         ghosts = {(g["r"], g["c"]): g for g in self.ghosts}
         for r in range(H):
             for c in range(W):
-                y, x, ch = r + 2, c * 2, self.grid[r][c]
+                y, x, ch = r + 2 + oy, c * 2 + ox, self.grid[r][c]
                 if (r, c) == (self.pr, self.pc):
                     put(scr, y, x, "C " if self.tick_n % 2 else "O ", curses.color_pair(2) | curses.A_BOLD)
                 elif (r, c) in ghosts:
@@ -188,7 +188,7 @@ class Game:
         msg = {"paused": "PAUSED - P to resume", "over": "GAME OVER - R restart, Q quit",
                "win": "LEVEL CLEARED!"}.get(self.state)
         if msg:
-            put(scr, H + 2, 0, msg, curses.A_BOLD)
+            put(scr, H + 2 + oy, ox, msg, curses.A_BOLD)
         scr.refresh()
 
 def put(scr, y, x, s, attr):
