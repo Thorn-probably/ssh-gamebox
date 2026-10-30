@@ -92,7 +92,7 @@ class SnakeGame:
 
         for r in range(H):
             for c in range(W):
-                y, x = r + 2, c * 2
+                y, x = r + 2 + oy, c * 2 + ox
                 # Outer border
                 if r == 0 or r == H - 1 or c == 0 or c == W - 1:
                     put(scr, y, x, "  ", curses.color_pair(1) | curses.A_REVERSE)
@@ -109,7 +109,7 @@ class SnakeGame:
             "over": "GAME OVER - Press R to restart, Q to quit",
         }.get(self.state, "")
         if msg:
-            put(scr, H + 2, 0, msg, curses.A_BOLD)
+            put(scr, H + 2 + oy, ox, msg, curses.A_BOLD)
         scr.refresh()
 def put(scr, y, x, s, attr):
     try:
