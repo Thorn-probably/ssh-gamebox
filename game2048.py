@@ -3,7 +3,7 @@ import math
 import random
 from pacman import put
 
-N = 4
+N = 6
 cw,ch, gap = 7, 3, 1
 bw = N * cw + (N + 1) * gap
 bh = N * ch + (N + 1) * gap

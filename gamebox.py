@@ -5,7 +5,7 @@ import random
 import sys
 import snake
 import pacman
-
+import game2048
 banner = [
     r"  ____    _    __  __ _____ ____   _____  __ ",
     r" / ___|  / \  |  \/  | ____| __ ) / _ \ \/ / ",
@@ -15,6 +15,7 @@ banner = [
 ]
 GAMES = [
     ("Pacman", pacman.run),
+    ("2048", game2048.run),
     ("Snake", snake.run)
 ]
 
@@ -50,11 +51,10 @@ def draw_menu(scr, selected_idx):
         x = max(4, (max_x - len(label)) // 2)
 
         if idx == selected_idx:
-            # Highlight selected row
             put(scr, y, x - 2, "> " + label + " <", curses.color_pair(2) | curses.A_BOLD | curses.A_REVERSE)
         else:
             put(scr, y, x, label, curses.color_pair(4) | curses.A_BOLD)
-    hint1 = "[W/S or Up/Down] Select   |   [ENTER / 1 / 2] Play"
+    hint1 = "[W/S or Up/Down] Select   |   [ENTER / 1 / 2 / 3] Play"
     hint2 = "[Q] Exit Gamebox"
     put(scr, max_y - 3, max(2, (max_x - len(hint1)) // 2), hint1, curses.color_pair(1))
     put(scr, max_y - 2, max(2, (max_x - len(hint2)) // 2), hint2, curses.color_pair(5))
@@ -84,11 +84,9 @@ def menu_loop(scr):
             selected = (selected - 1) % len(GAMES)
         elif k in (curses.KEY_DOWN, ord("s"), ord("S")):
             selected = (selected + 1) % len(GAMES)
-        elif k in (ord("1"), ord("2")):
-            idx = int(chr(k)) - 1
-            if 0 <= idx < len(GAMES):
-                launch_game(scr, GAMES[idx][1])
-        elif k in (curses.KEY_ENTER, 10, 13, 32):  # Enter or Space
+        elif ord("1") <= k < ord("1") + len(GAMES):
+            launch_game(scr, GAMES[k - ord("1")][1])
+        elif k in (curses.KEY_ENTER, 10, 13, 32): 
             launch_game(scr, GAMES[selected][1])
 
 def launch_game(scr, runner):
