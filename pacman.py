@@ -155,8 +155,6 @@ class Game:
                     if self.charges == 0:
                         for o in self.ghosts:
                             o["afraid"] = False
-                    for o in self.ghosts:
-                        o["afraid"] = False
                 else:
                     self.lives -= 1
                     self.state = "dead" if self.lives > 0 else "over"
